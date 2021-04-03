@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/line" >
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grad"
+        android:layout_above="@+id/bottom_layout"/>
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp">
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rg_1"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_1"
+                android:text="主页"
+                android:button="@null"
+                android:layout_marginRight="70dp"
+                android:drawableTop="@drawable/home_select"
+                android:checked="false"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_2"
+                android:text="卖书"
+                android:layout_gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/add_select"
+                android:checked="false"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_3"
+                android:text="我的"
+                android:button="@null"
+                android:layout_marginLeft="70dp"
+                android:drawableTop="@drawable/my_select"
+                android:checked="false"/>
+        </RadioGroup>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/accountImagePath"
+        android:src="@drawable/jl"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/accountName"
+        android:text="家有哈哈萌宝"
+        android:layout_toRightOf="@id/accountImagePath"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/grad"
+        android:textSize="14sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跟好几块"
+        android:id="@+id/content"
+        android:layout_below="@id/accountName"
+        android:layout_alignLeft="@id/accountName"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="作者"
+        android:textSize="14sp"
+        android:background="#FF1111"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/accountName"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:id="@+id/author" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2020.3.9-65"
+        android:textSize="15sp"
+        android:textColor="@color/grad"
+        android:layout_toRightOf="@id/author"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="2dp"
+        android:id="@+id/time"/>
+    <LinearLayout
+        android:layout_below="@id/content"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+</RelativeLayout>
