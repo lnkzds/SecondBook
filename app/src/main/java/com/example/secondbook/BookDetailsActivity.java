@@ -80,6 +80,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     int current_comment_num;
     SharedPreferences pref;
     NestedScrollView scrollView;
+
+    LinearLayout bottom;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         commentText=findViewById(R.id.contentText);
         send=findViewById(R.id.send);
         scrollView=findViewById(R.id.scroll);
+        bottom=findViewById(R.id.bottom);
 
 
 
@@ -135,12 +138,24 @@ public class BookDetailsActivity extends AppCompatActivity {
         sellbookIntroductionr.setText(bookInformation.getBookSellIntroduction());
 
 
+        // 如果是未登录状态
+         pref=getSharedPreferences("data",MODE_PRIVATE);
+         String status=pref.getString("status","false");
+         if(status.equals("false")){
+             checkBox.setVisibility(View.INVISIBLE);
+             IsCollection.setVisibility(View.INVISIBLE);
+             commentText.setVisibility(View.INVISIBLE);
+             send.setVisibility(View.INVISIBLE);
+             bottom.setVisibility(View.INVISIBLE);
+
+         }
+
+
         //检查是否已收藏
         exit_flag=false;
         String collectiorList=bookInformation.getCollectiorList();
         SharedPreferences pref=getSharedPreferences("data",MODE_PRIVATE);
         String account=pref.getString("account","null");
-
         if(collectiorList!=null){
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<String>>() {}.getType();
@@ -285,54 +300,58 @@ public class BookDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content=commentText.getText().toString();
-                if(content==null||content.equals("")){
-                    Toast.makeText(BookDetailsActivity.this,"输入内容不能为空! ",Toast.LENGTH_SHORT).show();
-                    commentText.setCursorVisible(false);
-                }else{
-                    Toast.makeText(BookDetailsActivity.this,"提交成功! ",Toast.LENGTH_SHORT).show();
-                    commentText.setText("");
 
-                    //为列表添加数据
+                pref=getSharedPreferences("data",MODE_PRIVATE);
+                String status=pref.getString("status","false");
+                if(status.equals("false")){
 
-                    //获取当前账户的信息
-                    pref=getSharedPreferences("data",MODE_PRIVATE);
-                    current_accountImagePath=pref.getString("imagepath","null");
-                    current_account=pref.getString("account","null");
-                    current_name=pref.getString("name","null");
-                    SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
-                    //设置时间
-                    Date date = new Date(System.currentTimeMillis());
-                    String Mydate=formatter.format(date).toString();
-                    Comment comment=new Comment();
-                    comment.setAccount(current_account);
-                    comment.setAccountimage(current_accountImagePath);
-                    comment.setTime(Mydate);
-                    comment.setBookId(bookInformation.getId());
-                    comment.setText(content);
-                    comment.setAccountname(current_name);
+                }else {
+                    if (content == null || content.equals("")) {
+                        Toast.makeText(BookDetailsActivity.this, "输入内容不能为空! ", Toast.LENGTH_SHORT).show();
+                        commentText.setCursorVisible(false);
+                    } else {
+                        Toast.makeText(BookDetailsActivity.this, "提交成功! ", Toast.LENGTH_SHORT).show();
+                        commentText.setText("");
 
-                    comments.add(comment);
-                    myAdapter.notifyDataSetChanged();
-                    scrollView.fullScroll(View.FOCUS_DOWN);//滚到底部
-                    //添加到数据库
-                    comment.save();
+                        //为列表添加数据
+                        //获取当前账户的信息
+                        current_accountImagePath = pref.getString("imagepath", "null");
+                        current_account = pref.getString("account", "null");
+                        current_name = pref.getString("name", "null");
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+                        //设置时间
+                        Date date = new Date(System.currentTimeMillis());
+                        String Mydate = formatter.format(date).toString();
+                        Comment comment = new Comment();
+                        comment.setAccount(current_account);
+                        comment.setAccountimage(current_accountImagePath);
+                        comment.setTime(Mydate);
+                        comment.setBookId(bookInformation.getId());
+                        comment.setText(content);
+                        comment.setAccountname(current_name);
 
-                    //更改文本框显示
-                    current_comment_num=current_comment_num+1;
-                    StringBuilder builder=new StringBuilder();
-                    builder.append("评论(");
-                    builder.append(current_comment_num);
-                    builder.append(")");
-                    commentNum.setText(builder.toString());
+                        comments.add(comment);
+                        myAdapter.notifyDataSetChanged();
+                        scrollView.fullScroll(View.FOCUS_DOWN);//滚到底部
+                        //添加到数据库
+                        comment.save();
+
+                        //更改文本框显示
+                        current_comment_num = current_comment_num + 1;
+                        StringBuilder builder = new StringBuilder();
+                        builder.append("评论(");
+                        builder.append(current_comment_num);
+                        builder.append(")");
+                        commentNum.setText(builder.toString());
 
 
-                }
-                //隐藏输入法
-                InputMethodManager im = (InputMethodManager)getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                im.hideSoftInputFromWindow(accountName.getWindowToken(), 0);
-            }
-        });
-
+                    }
+                    //隐藏输入法
+                    InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(accountName.getWindowToken(), 0);
+             }
+         }
+         });
 
     }
 
